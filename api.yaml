@@ -3,6 +3,33 @@ info:
   title: hohohost api
   version: v1
 paths:
+  /wish:
+      get: 
+        description: returns the wish list of the user
+        responses:
+          200: 
+            description: successfully get the wish
+            content:
+              application/json: 
+                schema: 
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Wish"
+      post:
+        description: create new wish
+        responses:
+          201:
+            description: successfully create new wish
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Wish"
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateWishRequest"
+
   /wish/{wishId}:
     get: 
       description: returns a wish
@@ -20,32 +47,23 @@ paths:
             application/json: 
               schema: 
                 $ref: "#/components/schemas/Wish"
-  /wish:
-    get: 
-      description: returns the wish list of the user
+    put:
+      description: updates an existing wish
+      parameters:
+        - name: wishId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
-        200: 
-          description: successfully get the wish
-          content:
-            application/json: 
-              schema: 
-                type: array
-                items:
-                  $ref: "#/components/schemas/Wish"
-    post:
-      description: create new wish
-      responses:
-        201:
-          description: succesfully create new wish
+        200:
+          description: successfully update the wish
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Wish"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateWishRequest"
+  
               
 
 components:
