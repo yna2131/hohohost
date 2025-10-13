@@ -58,14 +58,72 @@ paths:
             format: uuid
       responses:
         200:
-          description: successfully update the wish
+          description: successfully updates the wish
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Wish"
-  
-              
+    delete:
+      description: deletes an existing wish
+      parameters:
+        - name: wishId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully deletes the wish
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wish"
+  /:
+    post:
+      description: creates a new user
+      responses:
+        200:
+          description: successfully creates the new user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateUserRequest"
 
+  /{userId}:
+    get:
+      description: returns the user detail
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully returns the user detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      description: updates user detail
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully updates the user detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+      
 components:
   schemas:
     Wish:
@@ -108,3 +166,39 @@ components:
         url:
           type: string
           format: uri
+    User:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - password
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+            type: string
+    CreateUserRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
