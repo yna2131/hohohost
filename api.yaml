@@ -79,7 +79,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Wish"
-  /:
+  /user:
     post:
       description: creates a new user
       responses:
@@ -90,7 +90,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreateUserRequest"
 
-  /{userId}:
+  /user/{userId}:
     get:
       description: returns the user detail
       parameters:
@@ -123,6 +123,52 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+
+  /group:
+    post:
+      description: creates a new group
+      responses:
+        200:
+          description: successfully creates a new group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateGroupRequest"
+
+  /group/{groupId}:
+    get:
+      description: returns the group detail
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully returns the group detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    put:
+      description: updates the group detail
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully updates the group detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+      
       
 components:
   schemas:
@@ -202,3 +248,27 @@ components:
           type: string
         password:
           type: string
+    Group:
+      type: object
+      required:
+        - id
+        - groupName
+        - priceLimit
+      properties:
+        id:
+          type: string
+          format: uuid
+        groupName:
+          type: string
+        priceLimit:
+          type: integer
+    CreateGroupRequest:
+      type: object
+      required:
+        - groupName
+        - priceLimit
+      properties:
+        groupName:
+          type: string
+        priceLimit:
+          type: integer
