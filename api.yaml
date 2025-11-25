@@ -169,7 +169,34 @@ paths:
               schema:
                 $ref: "#/components/schemas/Group"
       
-      
+  /santa:
+    post:
+      description: creates a new secret santa
+      responses:
+        200:
+          description: successfully creates a new secret santa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateSantaRequest"
+  /santa/{santaId}:
+    get:
+      description: returns the secret santa detail
+      parameters:
+        - name: santaId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: successfully returns the secret santa detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Santa"
+
 components:
   schemas:
     Wish:
@@ -272,3 +299,40 @@ components:
           type: string
         priceLimit:
           type: integer
+    Santa:
+      type: object
+      required:
+        - id
+        - groupId
+        - giverId
+        - receiverId
+      properties:
+        id:
+          type: string
+          format: uuid
+        groupId:
+          type: string
+          format: uuid
+        giverId:
+          type: string
+          format: uuid
+        receiverId:
+          type: string
+          format: uuid
+    CreateSantaRequest:
+      type: object
+      required:
+        - groupId
+        - giverId
+        - receiverId
+      properties:
+        groupId:
+          type: string
+          format: uuid
+        giverId:
+          type: string
+          format: uuid
+        receiverId:
+          type: string
+          format: uuid
+  
